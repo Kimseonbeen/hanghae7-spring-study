@@ -1,14 +1,8 @@
----
-description: 전체 게시글 목록을 조회한다.
----
+# 게시글 작성 API
 
-# 전체 게시글 목록 조회 API
+## Create board
 
-
-
-## Select boards
-
-<mark style="color:green;">`GET`</mark> `/boards`
+<mark style="color:green;">`POST`</mark> `/board`
 
 \<Description of the endpoint>
 
@@ -18,27 +12,25 @@ description: 전체 게시글 목록을 조회한다.
 | ------------ | ------------------ |
 | Content-Type | `application/json` |
 
+**Body**
+
+| Name      | Type   | Description |
+| --------- | ------ | ----------- |
+| `title`   | string | 게시글 제목      |
+| `content` | string | 내용          |
+
 **Response**
 
 {% tabs %}
 {% tab title="200" %}
 ```json
-[
-  {
-    "board_id": 1,
-    "title": "title1",
-    "content": "content1"
+{
+    "board_id": 3,
+    "title": "title3",
+    "content": "content3"
     "created_at": 2024-11-06
     "updated_at": 2024-11-06
-  }
-  {
-    "board_id": 2,
-    "title": "title2",
-    "content": "content2"
-    "created_at": 2024-11-06
-    "updated_at": 2024-11-06
-  }
-]
+}
 ```
 {% endtab %}
 
@@ -50,3 +42,4 @@ description: 전체 게시글 목록을 조회한다.
 ```
 {% endtab %}
 {% endtabs %}
+
