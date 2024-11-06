@@ -4,8 +4,6 @@
 
 <mark style="color:green;">`DELETE`</mark> `/board/{board_id}`
 
-\<Description of the endpoint>
-
 **Headers**
 
 | Name         | Value              |

@@ -10,8 +10,6 @@ description: 선택한 게시글을 조회 한다.
 
 <mark style="color:green;">`GET`</mark> `/board/{board_id}`
 
-\<Description of the endpoint>
-
 **Headers**
 
 | Name         | Value              |

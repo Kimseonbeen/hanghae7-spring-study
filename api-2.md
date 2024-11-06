@@ -4,8 +4,6 @@
 
 <mark style="color:green;">`POST`</mark> `/board`
 
-\<Description of the endpoint>
-
 **Headers**
 
 | Name         | Value              |

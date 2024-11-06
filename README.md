@@ -10,8 +10,6 @@ description: 전체 게시글 목록을 조회한다.
 
 <mark style="color:green;">`GET`</mark> `/boards`
 
-\<Description of the endpoint>
-
 **Headers**
 
 | Name         | Value              |

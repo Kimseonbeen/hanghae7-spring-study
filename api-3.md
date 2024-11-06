@@ -8,8 +8,6 @@ description: 선택한 게시글을 수정한다.
 
 <mark style="color:green;">`FETCH`</mark> `/board/{board_id}`
 
-\<Description of the endpoint>
-
 **Headers**
 
 | Name         | Value              |
