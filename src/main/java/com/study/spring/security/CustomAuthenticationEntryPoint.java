@@ -13,6 +13,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
             throws IOException {
-        ErrorMessageUtils.makeErrorResponseBody(response, ErrorCode.NOT_FOUND);
+        ErrorMessageUtils.makeErrorResponseBody(response, ErrorCode_2.NOT_FOUND);
     }
 }

@@ -2,6 +2,9 @@ package com.study.spring.controller;
 
 import com.study.spring.domain.Post;
 import com.study.spring.dto.PostDTO;
+import com.study.spring.dto.req.PostRequestDTO;
+import com.study.spring.dto.res.PostResponseDTO;
+import com.study.spring.global.response.ApiResponse;
 import com.study.spring.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,70 +15,59 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
 
     @PostMapping("/post")
-    public ResponseEntity<PostDTO> create(@RequestBody Post post) {
-        Post savedPost = postService.savePost(post);
+    public ApiResponse<PostResponseDTO> create(@RequestBody PostRequestDTO requestDTO) {
+        Post savedPost = postService.savePost(requestDTO);
 
-        PostDTO postDTO =  PostDTO.builder()
-                .id(savedPost.getId())
-                .title(savedPost.getTitle())
-                .content(savedPost.getContent())
-                .author(savedPost.getAuthor()).build();
+        PostResponseDTO responseDTO = PostResponseDTO.from(savedPost);
 
-        return new ResponseEntity<>(postDTO, HttpStatus.CREATED);
+        return ApiResponse.ok(responseDTO);
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDTO>> list() {
+    public ApiResponse<List<PostResponseDTO>> list() {
 
         List<Post> posts = postService.findPosts();
 
-        List<PostDTO> postsDTO = posts.stream()
-                .map(post -> new PostDTO(post.getId(), post.getTitle(), post.getContent(), post.getAuthor()))
+        List<PostResponseDTO> responseDTO = posts.stream()
+                .map(PostResponseDTO::from)
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<>(postsDTO, HttpStatus.OK);
+        return ApiResponse.ok(responseDTO);
     }
 
     @GetMapping("/post/{postId}")
-    public ResponseEntity<PostDTO> getPost(@PathVariable("postId") Long postId) {
-        Post post = postService.findPost(postId);
+    public ApiResponse<PostResponseDTO> getPost(@PathVariable("postId") Long postId) {
+        Post findPost = postService.findPost(postId);
 
-        PostDTO postDTO =  PostDTO.builder()
-                .id(post.getId())
-                .title(post.getTitle())
-                .content(post.getContent())
-                .author(post.getAuthor()).build();
+        PostResponseDTO responseDTO = PostResponseDTO.from(findPost);
 
-        return new ResponseEntity<>(postDTO, HttpStatus.OK);
+        return ApiResponse.ok(responseDTO);
     }
 
     @PutMapping("/post/{postId}/edit")
-    public ResponseEntity<PostDTO> updatePost(@PathVariable("postId") Long postId,
-                                              @RequestBody Post post) {
+    public ApiResponse<PostResponseDTO> updatePost(@PathVariable("postId") Long postId,
+                                              @RequestBody PostRequestDTO requestDTO) {
 
-        Post updatedPost = postService.updatePost(postId, post);
+        Post updatedPost = postService.updatePost(postId, requestDTO);
 
-        PostDTO postDTO =  PostDTO.builder()
-                .id(updatedPost.getId())
-                .title(updatedPost.getTitle())
-                .content(updatedPost.getContent())
-                .author(updatedPost.getAuthor()).build();
+        PostResponseDTO responseDTO = PostResponseDTO.from(updatedPost);
 
-        return new ResponseEntity<>(postDTO, HttpStatus.OK);
+        return ApiResponse.ok(responseDTO);
     }
 
     @DeleteMapping("/post/{postId}/delete")
-    public ResponseEntity<String> deletePost(@PathVariable("postId") Long postId,
-                                             @RequestBody Post post) {
+    public ApiResponse<String> deletePost(@PathVariable("postId") Long postId,
+                                             @RequestBody PostRequestDTO requestDTO) {
 
-        postService.delete(postId, post);
+        postService.delete(postId, requestDTO);
 
-        return new ResponseEntity<>("게시글이 삭제되었습니다.", HttpStatus.OK);
+        return ApiResponse.ok("게시글이 삭제되었습니다.");
     }
 }

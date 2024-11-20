@@ -11,6 +11,6 @@ import org.springframework.stereotype.Component;
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
-        ErrorMessageUtils.makeErrorResponseBody(response, ErrorCode.ACCESS_DENIED);
+        ErrorMessageUtils.makeErrorResponseBody(response, ErrorCode_2.ACCESS_DENIED);
     }
 }

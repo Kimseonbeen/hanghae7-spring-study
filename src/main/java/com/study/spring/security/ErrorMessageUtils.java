@@ -13,13 +13,13 @@ public class ErrorMessageUtils {
         throw new IllegalStateException("유틸리티 클래스는 인스턴스화 할 수 없습니다.");
     }
 
-    public static void makeErrorResponseBody(HttpServletResponse response, ErrorCode errorCode)
+    public static void makeErrorResponseBody(HttpServletResponse response, ErrorCode_2 errorCode2)
             throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        response.setStatus(errorCode.getStatus());
+        response.setStatus(errorCode2.getStatus());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-        mapper.writeValue(response.getWriter(), ErrorResponse.failure(errorCode));
+        mapper.writeValue(response.getWriter(), ErrorResponse.failure(errorCode2));
 
     }
 

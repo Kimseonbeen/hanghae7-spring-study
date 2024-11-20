@@ -13,12 +13,12 @@ public class ErrorResponse<T> {
         this.message = message;
         this.code = code;
     }
-    public static <T> ErrorResponse<T> failure(ErrorCode errorCode) {
-        return new ErrorResponse<>(errorCode.getMessage(), errorCode.getCode());
+    public static <T> ErrorResponse<T> failure(ErrorCode_2 errorCode2) {
+        return new ErrorResponse<>(errorCode2.getMessage(), errorCode2.getCode());
     }
 
-    public static <T> ErrorResponse<T> failure(String message, ErrorCode errorCode) {
-        return new ErrorResponse<>(message, errorCode.getCode());
+    public static <T> ErrorResponse<T> failure(String message, ErrorCode_2 errorCode2) {
+        return new ErrorResponse<>(message, errorCode2.getCode());
     }
 
 }

@@ -3,7 +3,7 @@ package com.study.spring.security;
 import lombok.Getter;
 
 @Getter
-public enum ErrorCode {
+public enum ErrorCode_2 {
 
     BAD_REQUEST("요청에 오류가 있습니다.", LogType.ERROR, 400, "E001"),
     NOT_FOUND("해당 요청을 찾을 수 없습니다.", LogType.ERROR, 404, "E002"),
@@ -21,7 +21,7 @@ public enum ErrorCode {
     private final int status;
     private final String code;
 
-    ErrorCode(String message, LogType logType, int status, String code) {
+    ErrorCode_2(String message, LogType logType, int status, String code) {
         this.message = message;
         this.logType = logType;
         this.status = status;

@@ -41,6 +41,7 @@ public class SecurityConfig {
                         .permitAll()  
                         // 설정 경로 제외 인증 없이 접근 허용
                         .requestMatchers(
+                                "/api/**",
                                 "/member/signup",
                                 "/member/login"
                         ).permitAll()

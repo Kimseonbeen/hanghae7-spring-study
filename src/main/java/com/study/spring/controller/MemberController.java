@@ -1,12 +1,13 @@
 package com.study.spring.controller;
 
 import com.study.spring.dto.AddUserRequest;
+import com.study.spring.global.response.ApiResponse;
+import com.study.spring.global.response.CustomException;
+import com.study.spring.global.response.ErrorCode;
 import com.study.spring.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,20 +19,16 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> create(@RequestBody @Valid AddUserRequest addUserRequest, BindingResult bindingResult) {
-
-        String message = "success";
+    public ApiResponse<?> create(@RequestBody @Valid AddUserRequest addUserRequest, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
+            //return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
+            throw new CustomException(ErrorCode.CREATE_USER_NOT_VALID);
         }
 
-        try {
-            memberService.save(addUserRequest);
-        } catch (IllegalArgumentException e) {  // 중복 예외 처리
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-        return ResponseEntity.ok(message);
+        memberService.save(addUserRequest);
+
+        return ApiResponse.ok("성공");
     }
 
     @PostMapping

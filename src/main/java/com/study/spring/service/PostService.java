@@ -2,9 +2,12 @@ package com.study.spring.service;
 
 import com.study.spring.domain.Post;
 import com.study.spring.domain.PostStatus;
-import com.study.spring.dto.PostDTO;
+import com.study.spring.dto.req.PostRequestDTO;
+import com.study.spring.global.response.CustomException;
+import com.study.spring.global.response.ErrorCode;
 import com.study.spring.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +19,13 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public Post savePost(Post post) {
+    public Post savePost(PostRequestDTO requestDTO) {
+
+        Post post = Post.createPost(requestDTO, passwordEncoder);
+
         return postRepository.savePost(post);
     }
 
@@ -32,28 +39,28 @@ public class PostService {
     }
 
     @Transactional
-    public Post updatePost(Long postId, Post post) {
+    public Post updatePost(Long postId, PostRequestDTO requestDTO) {
 
         Post updatePost = postRepository.findOne(postId);
 
-        if (post.getPassword().equals(updatePost.getPassword())) {
-            updatePost.setTitle(post.getTitle());
-            updatePost.setContent(post.getContent());
+        if (requestDTO.password().equals(updatePost.getPassword())) {
+            updatePost.setTitle(requestDTO.title());
+            updatePost.setContent(requestDTO.content());
         } else {
-            throw new IllegalStateException("비밀번호를 확인해주세요.");
+            throw new CustomException(ErrorCode.PASSWORD_ERROR);
         }
 
         return updatePost;
     }
 
     @Transactional
-    public void delete(Long postId, Post post) {
+    public void delete(Long postId, PostRequestDTO requestDTO) {
         Post deletePost = postRepository.findOne(postId);
 
-        if (post.getPassword().equals(deletePost.getPassword())) {
+        if (requestDTO.password().equals(deletePost.getPassword())) {
             deletePost.setPostStatus(PostStatus.DELETE);
         } else {
-            throw new IllegalStateException("비밀번호를 확인해주세요.");
+            throw new CustomException(ErrorCode.PASSWORD_ERROR);
         }
     }
 }

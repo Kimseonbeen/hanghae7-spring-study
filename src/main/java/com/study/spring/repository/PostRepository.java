@@ -1,6 +1,8 @@
 package com.study.spring.repository;
 
 import com.study.spring.domain.Post;
+import com.study.spring.dto.req.PostRequestDTO;
+import com.study.spring.dto.res.PostResponseDTO;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -19,6 +21,7 @@ public class PostRepository {
         } else {
             em.merge(post);    // 이미 존재하는 엔티티라면 merge로 병합
         }
+
         return post;
     }
 

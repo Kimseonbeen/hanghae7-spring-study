@@ -15,13 +15,4 @@ public class Member {
 
     private String username;
     private String password;
-
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }
