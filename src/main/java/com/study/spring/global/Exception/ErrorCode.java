@@ -1,4 +1,4 @@
-package com.study.spring.global.response;
+package com.study.spring.global.Exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,9 @@ public enum ErrorCode {
     // 아이디 중복 오류
     USERNAME_DUPLICATE(40900, HttpStatus.CONFLICT, "아이디가 이미 존재합니다."),
     // 아이디 유효성 오류
-    CREATE_USER_NOT_VALID(40401, HttpStatus.BAD_REQUEST, "아이디 유효성을 확인해주세요.");
+    CREATE_USER_NOT_VALID(40401, HttpStatus.BAD_REQUEST, "아이디 유효성을 확인해주세요."),
+    // 게시글 존재 오류
+    POST_NOT_EXIST(40401, HttpStatus.NOT_FOUND, "존재하지 않는 게시글입니다.");
 
     private final Integer code;
     private final HttpStatus httpStatus;

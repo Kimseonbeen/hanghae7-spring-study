@@ -1,6 +1,5 @@
-package com.study.spring.global.response;
+package com.study.spring.global.Exception;
 
-import com.study.spring.security.ErrorCode_2;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 

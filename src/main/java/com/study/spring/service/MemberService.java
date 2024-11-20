@@ -2,13 +2,11 @@ package com.study.spring.service;
 
 import com.study.spring.domain.Member;
 import com.study.spring.dto.AddUserRequest;
-import com.study.spring.global.response.CustomException;
-import com.study.spring.global.response.ErrorCode;
+import com.study.spring.global.Exception.CustomException;
+import com.study.spring.global.Exception.ErrorCode;
 import com.study.spring.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service

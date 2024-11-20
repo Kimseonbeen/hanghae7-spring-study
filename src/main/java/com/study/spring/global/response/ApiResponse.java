@@ -2,6 +2,8 @@ package com.study.spring.global.response;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.study.spring.global.Exception.CustomException;
+import com.study.spring.global.Exception.ExceptionDto;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpStatus;
 

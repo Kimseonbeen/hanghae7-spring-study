@@ -1,4 +1,4 @@
-package com.study.spring.global.response;
+package com.study.spring.global.Exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

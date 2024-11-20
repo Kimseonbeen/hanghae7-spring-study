@@ -1,8 +1,8 @@
 package com.study.spring.global;
 
 import com.study.spring.global.response.ApiResponse;
-import com.study.spring.global.response.CustomException;
-import com.study.spring.global.response.ErrorCode;
+import com.study.spring.global.Exception.CustomException;
+import com.study.spring.global.Exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

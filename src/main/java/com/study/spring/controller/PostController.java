@@ -1,14 +1,11 @@
 package com.study.spring.controller;
 
 import com.study.spring.domain.Post;
-import com.study.spring.dto.PostDTO;
 import com.study.spring.dto.req.PostRequestDTO;
 import com.study.spring.dto.res.PostResponseDTO;
 import com.study.spring.global.response.ApiResponse;
 import com.study.spring.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

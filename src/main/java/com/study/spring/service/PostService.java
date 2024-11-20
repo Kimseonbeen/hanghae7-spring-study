@@ -3,8 +3,10 @@ package com.study.spring.service;
 import com.study.spring.domain.Post;
 import com.study.spring.domain.PostStatus;
 import com.study.spring.dto.req.PostRequestDTO;
-import com.study.spring.global.response.CustomException;
-import com.study.spring.global.response.ErrorCode;
+import com.study.spring.dto.res.PostResponseDTO;
+import com.study.spring.global.Exception.CustomException;
+import com.study.spring.global.Exception.ErrorCode;
+import com.study.spring.global.GlobalExceptionHandler;
 import com.study.spring.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -26,7 +29,7 @@ public class PostService {
 
         Post post = Post.createPost(requestDTO, passwordEncoder);
 
-        return postRepository.savePost(post);
+        return postRepository.save(post);
     }
 
     public List<Post> findPosts() {
@@ -35,15 +38,17 @@ public class PostService {
 
     @Transactional
     public Post findPost(Long postId) {
-        return postRepository.findOne(postId);
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_EXIST));
     }
 
     @Transactional
     public Post updatePost(Long postId, PostRequestDTO requestDTO) {
 
-        Post updatePost = postRepository.findOne(postId);
+        Post updatePost = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_EXIST));
 
-        if (requestDTO.password().equals(updatePost.getPassword())) {
+        if (passwordEncoder.matches(requestDTO.password(), updatePost.getPassword())) {
             updatePost.setTitle(requestDTO.title());
             updatePost.setContent(requestDTO.content());
         } else {
@@ -55,7 +60,8 @@ public class PostService {
 
     @Transactional
     public void delete(Long postId, PostRequestDTO requestDTO) {
-        Post deletePost = postRepository.findOne(postId);
+        Post deletePost = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_EXIST));
 
         if (requestDTO.password().equals(deletePost.getPassword())) {
             deletePost.setPostStatus(PostStatus.DELETE);
