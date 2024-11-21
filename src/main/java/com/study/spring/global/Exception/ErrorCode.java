@@ -20,7 +20,11 @@ public enum ErrorCode {
     // 아이디 유효성 오류
     CREATE_USER_NOT_VALID(40401, HttpStatus.BAD_REQUEST, "아이디 유효성을 확인해주세요."),
     // 게시글 존재 오류
-    POST_NOT_EXIST(40401, HttpStatus.NOT_FOUND, "존재하지 않는 게시글입니다.");
+    POST_NOT_EXIST(40401, HttpStatus.NOT_FOUND, "존재하지 않는 게시글입니다."),
+    // 권한 오류
+    ACCESS_DENIED(40300,HttpStatus.NOT_FOUND , "권한이 없습니다."),
+    // 인증 실패 오류
+    AUTHENTICATION_FAIL(40301,HttpStatus.BAD_REQUEST , "인증이 실패했습니다.");
 
     private final Integer code;
     private final HttpStatus httpStatus;

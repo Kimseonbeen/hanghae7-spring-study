@@ -1,4 +1,4 @@
-package com.study.spring.dto;
+package com.study.spring.dto.req;
 
 
 import jakarta.validation.constraints.*;
@@ -11,7 +11,7 @@ import lombok.*;
  * 이 애너테이션은 id, username, password를 파라미터로 받는 생성자를 자동으로 생성합니다.
  */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AddUserRequest {
+public class MemberRequestDTO {
 
     @NotNull
     // 최소 4자 이상, 10자 이하이며 알파벳 소문자(a~z), 숫자(0~9)
