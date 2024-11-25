@@ -1,55 +1,46 @@
 package com.study.spring.domain;
 
+import com.study.spring.dto.req.PostRequestDTO;
+import com.study.spring.global.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDateTime;
-
-import static jakarta.persistence.FetchType.*;
 
 @Entity
-@Getter @Setter
-@RequiredArgsConstructor
-@DynamicInsert  // entity를 save시 null 값은 배제하고 insert 실행
-@EntityListeners(AuditingEntityListener.class)  // 자동 날짜 생성
-public class Post {
+@Getter
+@Setter 
+@Builder
+@NoArgsConstructor  // 기본 생성자 자동 생성 
+@AllArgsConstructor // 모든 필드를 매개변수로 받는 생성자 자동 생성
+// @RequiredArgsConstructor -> 필수 인자를 받는 생성자를 자동으로 생성 final 필드 또는 @NonNUll 붙은 필드만 생성
+// @DynamicInsert  // entity를 save시 null 값은 배제하고 insert 실행
+public class Post extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     private Long id;
 
     private String title;
+    private String username;
     private String content;
     private String password;
     private String author;
 
-    @CreatedDate
-    private LocalDateTime createdAt;
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-
     // columnDefinition 제약사항만 넣어줄뿐, null 값을 defalut value로 치환해주지는 않음
-    @Column(name = "POST_STATUS", columnDefinition = "VARCHAR(10) DEFAULT 'ACTIVE'")
+    @Column(name = "POST_STATUS")
     @Enumerated(EnumType.STRING)
     private PostStatus postStatus;
 
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", postStatus=" + postStatus +
-                '}';
+    public static Post createPost(PostRequestDTO requestDTO, PasswordEncoder passwordEncoder) {
+        return Post.builder()
+                .title(requestDTO.title())
+                .username(requestDTO.userName())
+                .password(passwordEncoder.encode(requestDTO.password()))
+                .content(requestDTO.content())
+                .author(requestDTO.author())
+                .postStatus(PostStatus.ACTIVE)
+                .build();
     }
 }
 

@@ -1,8 +1,6 @@
 package com.study.spring.service;
 
 import com.study.spring.domain.Post;
-import com.study.spring.dto.PostDTO;
-import com.study.spring.repository.PostRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
