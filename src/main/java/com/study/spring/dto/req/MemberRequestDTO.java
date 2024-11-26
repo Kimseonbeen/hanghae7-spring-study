@@ -10,6 +10,8 @@ import lombok.*;
  * 즉, id, username, password 필드가 final로 선언되어 있기 때문에,
  * 이 애너테이션은 id, username, password를 파라미터로 받는 생성자를 자동으로 생성합니다.
  */
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberRequestDTO {
 

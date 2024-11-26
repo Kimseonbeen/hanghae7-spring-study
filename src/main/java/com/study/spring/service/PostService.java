@@ -48,7 +48,6 @@ public class PostService {
 
         Post updatePost = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_EXIST));
-
         if (passwordEncoder.matches(requestDTO.password(), updatePost.getPassword())) {
             updatePost.setTitle(requestDTO.title());
             updatePost.setContent(requestDTO.content());

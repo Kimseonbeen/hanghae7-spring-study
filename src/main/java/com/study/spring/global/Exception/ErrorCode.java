@@ -24,7 +24,10 @@ public enum ErrorCode {
     // 권한 오류
     ACCESS_DENIED(40300,HttpStatus.NOT_FOUND , "권한이 없습니다."),
     // 인증 실패 오류
-    AUTHENTICATION_FAIL(40301,HttpStatus.BAD_REQUEST , "인증이 실패했습니다.");
+    AUTHENTICATION_FAIL(40301,HttpStatus.BAD_REQUEST , "인증이 실패했습니다."),
+
+    // TEST
+    DUPLICATED_MEMBERSHIP_REGISTER(40301,HttpStatus.BAD_REQUEST , "중복 요청 오류");
 
     private final Integer code;
     private final HttpStatus httpStatus;

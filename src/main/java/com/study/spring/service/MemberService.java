@@ -18,10 +18,10 @@ public class MemberService {
 
     public Member save(MemberRequestDTO memberRequestDTO) {
         // 1. username 중복 체크
-        if (memberRepository.existsByUsername(memberRequestDTO.getUsername())) {
-            // 중복된 username이 존재하면 409 CONFLICT 와 함께 오류 메시지 반환
-            throw new CustomException(ErrorCode.USERNAME_DUPLICATE);
-        }
+//        if (memberRepository.existsByUsername(memberRequestDTO.getUsername())) {
+//            // 중복된 username이 존재하면 409 CONFLICT 와 함께 오류 메시지 반환
+//            throw new CustomException(ErrorCode.USERNAME_DUPLICATE);
+//        }
 
         Member member = new Member();
         member.setUsername(memberRequestDTO.getUsername());

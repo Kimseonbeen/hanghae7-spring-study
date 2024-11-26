@@ -48,7 +48,7 @@ public class SecurityConfig {
                         .anyRequest()
                         .authenticated()
                 )
-                // 용자 정의 핸들러로, 인증 실패나 접근 거부 시 사용자에게 적절한 응답제공
+                // 사용자 정의 핸들러로, 인증 실패나 접근 거부 시 사용자에게 적절한 응답제공
                 .exceptionHandling(exceptionHandler ->
                         exceptionHandler
                                 .authenticationEntryPoint(authenticationEntryPoint) // 인증 실패 예외처리
