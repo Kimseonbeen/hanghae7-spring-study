@@ -17,4 +17,10 @@ public class Member {
 
     private String username;
     private String password;
+
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private MemberRoleType role;
+
+
 }
