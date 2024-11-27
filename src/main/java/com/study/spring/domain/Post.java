@@ -32,10 +32,10 @@ public class Post extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PostStatus postStatus;
 
-    public static Post createPost(PostRequestDTO requestDTO, PasswordEncoder passwordEncoder) {
+    public static Post createPost(PostRequestDTO requestDTO, String username, PasswordEncoder passwordEncoder) {
         return Post.builder()
                 .title(requestDTO.title())
-                .username(requestDTO.userName())
+                .username(username)
                 .password(passwordEncoder.encode(requestDTO.password()))
                 .content(requestDTO.content())
                 .author(requestDTO.author())

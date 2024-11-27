@@ -36,20 +36,13 @@ public class MemberService {
                         .role(MemberRoleType.ADMIN)
                         .build();
 
-//        member.setUsername(memberRequestDTO.getUsername());
-//        member.setPassword(memberRequestDTO.getPassword());
-//        member.setRole(MemberRoleType.ADMIN);
-
         return memberRepository.save(member);
     }
 
     public void login(MemberRequestDTO memberRequestDTO, HttpServletResponse response) {
 
-        Member member = memberRepository.findByUsername(memberRequestDTO.getUsername());
-
-        if (member == null) {
-            throw new CustomException(ErrorCode.USER_NOT_EXIST);
-        }
+        Member member = memberRepository.findByUsername(memberRequestDTO.getUsername())
+                        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_EXIST));
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(member.getUsername(), member.getRole()));
     }

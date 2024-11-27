@@ -26,26 +26,7 @@ public class PostController {
     @PostMapping("/post")
     public ApiResponse<PostResponseDTO> create(@RequestBody PostRequestDTO requestDTO, HttpServletRequest request) {
 
-        System.out.println("request = " + request);
-
-        String token = jwtUtil.resolveToken(request);
-
-        System.out.println("token = " + token);
-
-        Claims claims;
-
-        if(token != null) {
-            // Token 검증
-            if (jwtUtil.validateToken(token)) {
-                // 토큰에서 사용자 정보 가져오기
-                claims = jwtUtil.getUserInfoFromToken(token);
-                System.out.println("claims = " + claims);
-            } else {
-                throw new IllegalArgumentException("Token Error");
-            }
-        }
-
-        Post savedPost = postService.savePost(requestDTO);
+        Post savedPost = postService.savePost(requestDTO, request);
 
         PostResponseDTO responseDTO = PostResponseDTO.from(savedPost);
 

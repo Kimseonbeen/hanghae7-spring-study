@@ -7,7 +7,10 @@ import com.study.spring.dto.res.PostResponseDTO;
 import com.study.spring.global.Exception.CustomException;
 import com.study.spring.global.Exception.ErrorCode;
 import com.study.spring.global.GlobalExceptionHandler;
+import com.study.spring.jwt.JwtUtil;
 import com.study.spring.repository.PostRepository;
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,11 +26,20 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     @Transactional
-    public Post savePost(PostRequestDTO requestDTO) {
+    public Post savePost(PostRequestDTO requestDTO, HttpServletRequest request) {
 
-        Post post = Post.createPost(requestDTO, passwordEncoder);
+        String token = jwtUtil.resolveToken(request);
+
+        if (token == null || !jwtUtil.validateToken(token)) {
+            throw new CustomException(ErrorCode.TOKEN_IS_NOT_VALID);
+        }
+
+        Claims claims = jwtUtil.getUserInfoFromToken(token);
+
+        Post post = Post.createPost(requestDTO, claims.getSubject(), passwordEncoder);
 
         return postRepository.save(post);
     }
