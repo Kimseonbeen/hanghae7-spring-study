@@ -66,10 +66,9 @@ public class PostController {
     }
 
     @DeleteMapping("/post/{postId}/delete")
-    public ApiResponse<String> deletePost(@PathVariable("postId") Long postId,
-                                             @RequestBody PostRequestDTO requestDTO, HttpServletRequest request) {
+    public ApiResponse<String> deletePost(@PathVariable("postId") Long postId, HttpServletRequest request) {
 
-        postService.delete(postId, requestDTO, request);
+        postService.delete(postId, request);
 
         return ApiResponse.ok("게시글이 삭제되었습니다.");
     }

@@ -68,7 +68,7 @@ public class PostService {
         Post updatePost = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_EXIST));
 
-        if (updatePost.getUpdatedAt().equals(claims.getSubject())) {
+        if (updatePost.getUsername().equals(claims.getSubject())) {
             updatePost.setTitle(requestDTO.title());
             updatePost.setContent(requestDTO.content());
         } else {
@@ -78,7 +78,7 @@ public class PostService {
     }
 
     @Transactional
-    public void delete(Long postId, PostRequestDTO requestDTO, HttpServletRequest request) {
+    public void delete(Long postId, HttpServletRequest request) {
 
         String token = jwtUtil.resolveToken(request);
 
@@ -91,7 +91,7 @@ public class PostService {
         Post deletePost = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_EXIST));
 
-        if (deletePost.getUpdatedAt().equals(claims.getSubject())) {
+        if (deletePost.getUsername().equals(claims.getSubject())) {
             deletePost.setPostStatus(PostStatus.DELETE);
         } else {
             throw new CustomException(ErrorCode.PASSWORD_ERROR);
