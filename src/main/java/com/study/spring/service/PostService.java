@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -39,7 +38,7 @@ public class PostService {
 
         Claims claims = jwtUtil.getUserInfoFromToken(token);
 
-        Post post = Post.createPost(requestDTO, claims.getSubject(), passwordEncoder);
+        Post post = Post.createPost(requestDTO, claims.getSubject());
 
         return postRepository.save(post);
     }
@@ -56,26 +55,43 @@ public class PostService {
     }
 
     @Transactional
-    public Post updatePost(Long postId, PostRequestDTO requestDTO) {
+    public Post updatePost(Long postId, PostRequestDTO requestDTO, HttpServletRequest request) {
+
+        String token = jwtUtil.resolveToken(request);
+
+        if (token == null || !jwtUtil.validateToken(token)) {
+            throw new CustomException(ErrorCode.TOKEN_IS_NOT_VALID);
+        }
+
+        Claims claims = jwtUtil.getUserInfoFromToken(token);
 
         Post updatePost = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_EXIST));
-        if (passwordEncoder.matches(requestDTO.password(), updatePost.getPassword())) {
+
+        if (updatePost.getUpdatedAt().equals(claims.getSubject())) {
             updatePost.setTitle(requestDTO.title());
             updatePost.setContent(requestDTO.content());
         } else {
             throw new CustomException(ErrorCode.PASSWORD_ERROR);
         }
-
         return updatePost;
     }
 
     @Transactional
-    public void delete(Long postId, PostRequestDTO requestDTO) {
+    public void delete(Long postId, PostRequestDTO requestDTO, HttpServletRequest request) {
+
+        String token = jwtUtil.resolveToken(request);
+
+        if (token == null || !jwtUtil.validateToken(token)) {
+            throw new CustomException(ErrorCode.TOKEN_IS_NOT_VALID);
+        }
+
+        Claims claims = jwtUtil.getUserInfoFromToken(token);
+
         Post deletePost = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_EXIST));
 
-        if (requestDTO.password().equals(deletePost.getPassword())) {
+        if (deletePost.getUpdatedAt().equals(claims.getSubject())) {
             deletePost.setPostStatus(PostStatus.DELETE);
         } else {
             throw new CustomException(ErrorCode.PASSWORD_ERROR);

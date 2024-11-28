@@ -3,6 +3,10 @@ package com.study.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.parameters.P;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -22,5 +26,6 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private MemberRoleType role;
 
-
+    @OneToMany(mappedBy = "member")
+    List<Post> posts = new ArrayList<>();
 }

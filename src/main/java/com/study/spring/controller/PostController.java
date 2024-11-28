@@ -56,9 +56,9 @@ public class PostController {
 
     @PutMapping("/post/{postId}/edit")
     public ApiResponse<PostResponseDTO> updatePost(@PathVariable("postId") Long postId,
-                                              @RequestBody PostRequestDTO requestDTO) {
+                                              @RequestBody PostRequestDTO requestDTO, HttpServletRequest request) {
 
-        Post updatedPost = postService.updatePost(postId, requestDTO);
+        Post updatedPost = postService.updatePost(postId, requestDTO, request);
 
         PostResponseDTO responseDTO = PostResponseDTO.from(updatedPost);
 
@@ -67,9 +67,9 @@ public class PostController {
 
     @DeleteMapping("/post/{postId}/delete")
     public ApiResponse<String> deletePost(@PathVariable("postId") Long postId,
-                                             @RequestBody PostRequestDTO requestDTO) {
+                                             @RequestBody PostRequestDTO requestDTO, HttpServletRequest request) {
 
-        postService.delete(postId, requestDTO);
+        postService.delete(postId, requestDTO, request);
 
         return ApiResponse.ok("게시글이 삭제되었습니다.");
     }

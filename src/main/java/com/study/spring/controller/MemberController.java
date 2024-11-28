@@ -4,13 +4,10 @@ import com.study.spring.dto.req.MemberRequestDTO;
 import com.study.spring.global.response.ApiResponse;
 import com.study.spring.global.Exception.CustomException;
 import com.study.spring.global.Exception.ErrorCode;
-import com.study.spring.jwt.JwtUtil;
 import com.study.spring.service.MemberService;
-import io.jsonwebtoken.Jwt;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
