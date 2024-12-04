@@ -24,19 +24,23 @@ public class Post extends BaseEntity {
     private String title;
     private String username;
     private String content;
-    private String password;
+//    private String password;
     private String author;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     // columnDefinition 제약사항만 넣어줄뿐, null 값을 defalut value로 치환해주지는 않음
     @Column(name = "POST_STATUS")
     @Enumerated(EnumType.STRING)
     private PostStatus postStatus;
 
-    public static Post createPost(PostRequestDTO requestDTO, PasswordEncoder passwordEncoder) {
+    public static Post createPost(PostRequestDTO requestDTO, String username) {
         return Post.builder()
                 .title(requestDTO.title())
-                .username(requestDTO.userName())
-                .password(passwordEncoder.encode(requestDTO.password()))
+                .username(username)
+//                .password(passwordEncoder.encode(requestDTO.password()))
                 .content(requestDTO.content())
                 .author(requestDTO.author())
                 .postStatus(PostStatus.ACTIVE)

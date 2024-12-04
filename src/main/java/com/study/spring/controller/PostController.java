@@ -4,7 +4,10 @@ import com.study.spring.domain.Post;
 import com.study.spring.dto.req.PostRequestDTO;
 import com.study.spring.dto.res.PostResponseDTO;
 import com.study.spring.global.response.ApiResponse;
+import com.study.spring.jwt.JwtUtil;
 import com.study.spring.service.PostService;
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +21,12 @@ public class PostController {
 
     private final PostService postService;
 
+    private final JwtUtil jwtUtil;
+
     @PostMapping("/post")
-    public ApiResponse<PostResponseDTO> create(@RequestBody PostRequestDTO requestDTO) {
-        Post savedPost = postService.savePost(requestDTO);
+    public ApiResponse<PostResponseDTO> create(@RequestBody PostRequestDTO requestDTO, HttpServletRequest request) {
+
+        Post savedPost = postService.savePost(requestDTO, request);
 
         PostResponseDTO responseDTO = PostResponseDTO.from(savedPost);
 
@@ -50,9 +56,9 @@ public class PostController {
 
     @PutMapping("/post/{postId}/edit")
     public ApiResponse<PostResponseDTO> updatePost(@PathVariable("postId") Long postId,
-                                              @RequestBody PostRequestDTO requestDTO) {
+                                              @RequestBody PostRequestDTO requestDTO, HttpServletRequest request) {
 
-        Post updatedPost = postService.updatePost(postId, requestDTO);
+        Post updatedPost = postService.updatePost(postId, requestDTO, request);
 
         PostResponseDTO responseDTO = PostResponseDTO.from(updatedPost);
 
@@ -60,10 +66,9 @@ public class PostController {
     }
 
     @DeleteMapping("/post/{postId}/delete")
-    public ApiResponse<String> deletePost(@PathVariable("postId") Long postId,
-                                             @RequestBody PostRequestDTO requestDTO) {
+    public ApiResponse<String> deletePost(@PathVariable("postId") Long postId, HttpServletRequest request) {
 
-        postService.delete(postId, requestDTO);
+        postService.delete(postId, request);
 
         return ApiResponse.ok("게시글이 삭제되었습니다.");
     }
